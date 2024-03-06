@@ -3,7 +3,7 @@ package com.litszwaiboris.Toolkit;
 import java.io.*;
 import java.util.*;
 import static java.lang.Thread.*;
-import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.lang3.*;
 
 // Class initialization
 public class Methods {
