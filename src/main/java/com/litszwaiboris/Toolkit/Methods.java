@@ -30,18 +30,19 @@ public class Methods {
         }
         else {
             System.out.println(ANSI_BOLD + ANSI_RED + "No" + ANSI_RESET);
+            System.out.println();
             System.out.println("This operating system does not support Boris' Toolkit, press Enter to exit");
 
             // Detect enter
             Scanner detect = new Scanner(System.in);
-            String keyPressed = detect.next();
+            String keyPressed = detect.nextLine();
             detect.close();
 
             if (Objects.equals(keyPressed, "")) {
                 return;
             }
         }
-        sleep(5000);
+        sleep(1000);
     }
 
     // Method to invoke shell commands
