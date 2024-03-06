@@ -19,16 +19,17 @@ public class Methods {
         final String ANSI_PURPLE = "\u001B[35m";
         final String ANSI_CYAN = "\u001B[36m";
         final String ANSI_WHITE = "\u001B[37m";
+        final String ANSI_BOLD = "\u001B[1m";
 
         String os = SystemUtils.OS_NAME;
         System.out.println("Checking Environment:");
         System.out.println("OS: " + os);
         System.out.print("OS Supported: ");
         if (SystemUtils.IS_OS_MAC) {
-            System.out.println(ANSI_GREEN + "Yes" + ANSI_RESET);
+            System.out.println(ANSI_BOLD + ANSI_GREEN + "Yes" + ANSI_RESET);
         }
         else {
-            System.out.println(ANSI_RED + "No" + ANSI_RESET);
+            System.out.println(ANSI_BOLD + ANSI_RED + "No" + ANSI_RESET);
             System.out.println("This operating system does not support Boris' Toolkit, press Enter to exit");
 
             // Detect enter
