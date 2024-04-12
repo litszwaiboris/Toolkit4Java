@@ -56,56 +56,50 @@ public class Methods {
         }
     }
 
+    // Arguments help
+    public static void DisplayHelp() {
+        System.out.println("Boris' Toolkit for Mac Java Special Edition");
+        System.out.println("Usage:");
+        System.out.println("-l Delete Launchpad Apps");
+        System.out.println("-r Reset Launchpad");
+        System.out.println("-d Enable/Disable Hide Desktop Icons");
+    }
+
     // Delete Launchpad Apps Function
     public static void del_launchpad_apps() throws IOException, InterruptedException {
+        Methods.check();
+        // Ask for app name
+        System.out.println("What is the name of the application?");
+        Scanner AppName = new Scanner(System.in);
+        String appName = AppName.nextLine();
 
-        // Run confirmation
-        System.out.println("Run? yes/no");
-        Scanner firstConfirm = new Scanner(System.in);
-        String firstAnswer = firstConfirm.nextLine();
+        // Final chance before execution
+        System.out.println("Confirm? yes/no");
+        Scanner userInput = new Scanner(System.in);
+        String Answer = userInput.nextLine();
+        userInput.close();
 
-        if (Objects.equals(firstAnswer, "yes")) {
-            // Ask for app name
-            System.out.println("What is the name of the application?");
-            Scanner AppName = new Scanner(System.in);
-            String appName = AppName.nextLine();
-
-            // Final chance before execution
-            System.out.println("Confirm? yes/no");
-            Scanner userInput = new Scanner(System.in);
-            String secondAnswer = userInput.nextLine();
-            userInput.close();
-
-            if (Objects.equals(secondAnswer, "yes")) {
-                command("sqlite3 $(getconf DARWIN_USER_DIR)com.apple.dock.launchpad/db/db \"DELETE FROM apps WHERE title='" + appName + "'" + '"');
-                System.out.println("Completed.");
-                sleep(1000);
-            }
-            return;
+        if (Objects.equals(Answer, "yes")) {
+            command("sqlite3 $(getconf DARWIN_USER_DIR)com.apple.dock.launchpad/db/db \"DELETE FROM apps WHERE title='" + appName + "'" + '"');
+            System.out.println("Completed.");
+            sleep(1000);
         }
+        return;
     }
 
     // Reset Launchpad Layout
     public static void reset_launchpad() throws IOException, InterruptedException {
+        // Confirm before xecution
+        System.out.println("Confirm? yes/no");
+        Scanner userInput = new Scanner(System.in);
+        String Answer = userInput.nextLine();
+        userInput.close();
 
-        // Run confirmation
-        System.out.println("Run? yes/no");
-        Scanner firstConfirm = new Scanner(System.in);
-        String firstAnswer = firstConfirm.nextLine();
-
-        if (Objects.equals(firstAnswer, "yes")) {
-            // Final chance before execution
-            System.out.println("Confirm? yes/no");
-            Scanner userInput = new Scanner(System.in);
-            String secondAnswer = userInput.nextLine();
-            userInput.close();
-
-            if (Objects.equals(secondAnswer, "yes")) {
-                command("defaults write com.apple.dock ResetLaunchPad -bool true");
-                command("killall Dock");
-                System.out.println("Completed.");
-                sleep(1000);
-            }
+        if (Objects.equals(Answer, "yes")) {
+            command("defaults write com.apple.dock ResetLaunchPad -bool true");
+            command("killall Dock");
+            System.out.println("Completed.");
+            sleep(1000);
             return;
         }
         return;
@@ -113,57 +107,45 @@ public class Methods {
 
     // Disable/Enable Desktop Icons
     public static void desktop_icons() throws IOException, InterruptedException {
+        // Enable or Disable
+        System.out.println("Enable/Disable Desktop Icons?");
+        Scanner eORd = new Scanner(System.in);
+        String eORdReturn = eORd.nextLine();
 
-        // Run confirmation
-        System.out.println("Run? yes/no");
-        Scanner firstConfirm = new Scanner(System.in);
-        String firstAnswer = firstConfirm.nextLine();
+        if (Objects.equals(eORdReturn, "Enable")) {
 
-        if (Objects.equals(firstAnswer, "yes")) {
+            // Final chance before execution
+            System.out.println("Confirm? yes/no");
+            Scanner userInput = new Scanner(System.in);
+            String Answer = userInput.nextLine();
+            userInput.close();
 
-            // Enable or Disable
-            System.out.println("Enable/Disable Desktop Icons?");
-            Scanner eORd = new Scanner(System.in);
-            String eORdReturn = eORd.nextLine();
-
-            if (Objects.equals(eORdReturn, "Enable")) {
-
-                // Final chance before execution
-                System.out.println("Confirm? yes/no");
-                Scanner userInput = new Scanner(System.in);
-                String secondAnswer = userInput.nextLine();
-                userInput.close();
-
-                if (Objects.equals(secondAnswer, "yes")) {
-                    command("defaults write com.apple.Finder CreateDesktop true");
-                    command("killall Finder");
-                    command("Killall Dock");
-                    System.out.println("Completed.");
-                    sleep(1000);
-                }
-                return;
-            }
-            else if (Objects.equals(eORdReturn, "Disable")) {
-
-                // Final chance before execution
-                System.out.println("Confirm? yes/no");
-                Scanner userInput = new Scanner(System.in);
-                String secondAnswer = userInput.nextLine();
-                userInput.close();
-
-                if (Objects.equals(secondAnswer, "yes")) {
-                    command("defaults write com.apple.Finder CreateDesktop false");
-                    command("killall Finder");
-                    command("Killall Dock");
-                    System.out.println("Completed.");
-                    sleep(1000);
-                }
-                return;
+            if (Objects.equals(Answer, "yes")) {
+                command("defaults write com.apple.Finder CreateDesktop true");
+                command("killall Finder");
+                command("Killall Dock");
+                System.out.println("Completed.");
+                sleep(1000);
             }
             return;
+        }
+        else if (Objects.equals(eORdReturn, "Disable")) {
 
+            // Final chance before execution
+            System.out.println("Confirm? yes/no");
+            Scanner userInput = new Scanner(System.in);
+            String Answer = userInput.nextLine();
+            userInput.close();
+
+            if (Objects.equals(Answer, "yes")) {
+                command("defaults write com.apple.Finder CreateDesktop false");
+                command("killall Finder");
+                command("Killall Dock");
+                System.out.println("Completed.");
+                sleep(1000);
+            }
+            return;
         }
         return;
-
     }
 }

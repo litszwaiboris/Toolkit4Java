@@ -10,41 +10,22 @@ public class Main {
     // Main function
     public static void main(String[] arg) throws IOException, InterruptedException {
 
-        // Run Check
-        Methods.check();
+        List<String> Arguments = Arrays.asList(arg);
 
-        if (SystemUtils.IS_OS_MAC) {
-            // Clear screen
-            System.out.println("\033[H\033[2J");
-            System.out.flush();
-
-            // Main Menu
-            System.out.println("Boris' Toolkit for Mac Java Special Edition");
-            System.out.println("Congrats for this dumb boi to finally learn java");
-            System.out.println();
-            System.out.println("Hello user. Please choose your choice of function");
-            System.out.println("1. Delete Launchpad Apps");
-            System.out.println("2. Reset Launchpad");
-            System.out.println("3. Enable/Disable Hide Desktop Icons");
-            System.out.println("4. Exit Toolkit");
-
-            // Menu navigation
-            Scanner userInput = new Scanner(System.in);
-            String answer = userInput.nextLine();
-            switch (answer) {
-                case "1":
-                    Methods.del_launchpad_apps();
-                    break;
-                case "2":
-                    Methods.reset_launchpad();
-                    break;
-                case "3":
-                    Methods.desktop_icons();
-                    break;
-                case "4":
-                    break;
-            }
+        if (Arguments.contains("-h") || Arguments.contains("--help")) {
+            Methods.DisplayHelp();
         }
-        return;
+        else if (Arguments.contains("-l")) {
+            Methods.del_launchpad_apps();
+        }
+        else if (Arguments.contains("-r")) {
+            Methods.reset_launchpad();
+        }
+        else if (Arguments.contains("-d")) {
+            Methods.desktop_icons();
+        }
+        else {
+            Methods.DisplayHelp();
+        }
     }
 }
