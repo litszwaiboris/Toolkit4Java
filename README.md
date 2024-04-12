@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/litszwaiboris/Toolkit4Java/actions/workflows/maven.yml/badge.svg)](https://github.com/litszwaiboris/Toolkit4Java/actions/workflows/maven.yml)
+
 # Boris' Toolkit for Java
 
 #### My first project on Java, and it is simple as that c:
