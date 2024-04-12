@@ -2,6 +2,8 @@
 
 #### My first project on Java, and it is simple as that c:
 
+#### New version, same functions, but instead utilize arguments instead of being cli-based
+
 #### Contains 3 functions
 - Delete App from Launchpad Database
 - Reset Launchpad Layout
