@@ -109,7 +109,6 @@ public class Methods {
                 sleep(1000);
                 System.exit(0);
             }
-            return;
         }
     }
 }

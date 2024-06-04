@@ -8,7 +8,7 @@ public enum ANSI {
 
     public final String value;
 
-    private ANSI(String value) {
+    ANSI(String value) {
         this.value = value;
     }
 }
