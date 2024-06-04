@@ -2,30 +2,42 @@ package com.litszwaiboris.Toolkit;
 
 import java.io.*;
 import java.util.*;
-import org.apache.commons.lang3.SystemUtils;
 
-// Class Initialization
 public class Main {
 
-    // Main function
     public static void main(String[] arg) throws IOException, InterruptedException {
-
         List<String> Arguments = Arrays.asList(arg);
 
         if (Arguments.contains("-h") || Arguments.contains("--help")) {
             Methods.DisplayHelp();
+            System.exit(0);
         }
-        else if (Arguments.contains("-l")) {
-            Methods.del_launchpad_apps();
+
+        else if (Arguments.get(0).equals("-l") || Arguments.get(0).equals("--launchpad")) {
+            if (Arguments.get(1).equals("-n") || Arguments.get(1).equals("--name")) {
+                Methods.del_launchpad_apps(Arguments.get(2));
+            } else {
+                throw new IllegalArgumentException("Please specify app name.");
+            }
         }
-        else if (Arguments.contains("-r")) {
+
+        else if (Arguments.get(0).equals("-r") || Arguments.get(0).equals("--reset")) {
             Methods.reset_launchpad();
         }
-        else if (Arguments.contains("-d")) {
-            Methods.desktop_icons();
+
+        else if (Arguments.contains("-d") || Arguments.contains("--desktop"))  {
+            if (Arguments.get(1).equals("--disable")) {
+                Methods.desktop_icons("disable");
+            } else if (Arguments.get(1).equals("--enable")) {
+                Methods.desktop_icons("enable");
+            } else {
+                throw new IllegalArgumentException("Please use arguments --enable/--disable to modify desktop icons settings.");
+            }
         }
+
         else {
             Methods.DisplayHelp();
         }
     }
 }
+

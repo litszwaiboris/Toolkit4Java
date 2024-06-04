@@ -2,34 +2,23 @@ package com.litszwaiboris.Toolkit;
 
 import java.io.*;
 import java.util.*;
+
+import static com.litszwaiboris.Toolkit.ANSI.*;
 import static java.lang.Thread.*;
 import org.apache.commons.lang3.*;
 
-// Class initialization
 public class Methods {
-    // Check if Toolkit is compatible
-    public static void check() throws NullPointerException, InterruptedException {
-        // Command line colors
-        final String ANSI_RESET = "\u001B[0m";
-        final String ANSI_BLACK = "\u001B[30m";
-        final String ANSI_RED = "\u001B[31m";
-        final String ANSI_GREEN = "\u001B[32m";
-        final String ANSI_YELLOW = "\u001B[33m";
-        final String ANSI_BLUE = "\u001B[34m";
-        final String ANSI_PURPLE = "\u001B[35m";
-        final String ANSI_CYAN = "\u001B[36m";
-        final String ANSI_WHITE = "\u001B[37m";
-        final String ANSI_BOLD = "\u001B[1m";
 
+    public static void MacCheck() throws NullPointerException, InterruptedException {
         String os = SystemUtils.OS_NAME;
         System.out.println("Checking Environment:");
         System.out.println("OS: " + os);
         System.out.print("OS Supported: ");
         if (SystemUtils.IS_OS_MAC) {
-            System.out.println(ANSI_BOLD + ANSI_GREEN + "Yes" + ANSI_RESET);
+            System.out.println(ANSI_BOLD.value + ANSI_GREEN.value + "Yes" + ANSI_RESET.value);
         }
         else {
-            System.out.println(ANSI_BOLD + ANSI_RED + "No" + ANSI_RESET);
+            System.out.println(ANSI_BOLD.value + ANSI_RED.value + "No" + ANSI_RESET.value);
             System.out.println();
             System.out.println("This operating system does not support Boris' Toolkit, press Enter to exit");
 
@@ -45,7 +34,6 @@ public class Methods {
         sleep(1000);
     }
 
-    // Method to invoke shell commands
     private static void command(String arg) throws IOException {
         String[] command = {"bash", "-c", arg};
         Process a = new ProcessBuilder(command).start();
@@ -56,96 +44,72 @@ public class Methods {
         }
     }
 
-    // Arguments help
+    private static int confirm() {
+        System.out.println("Confirm? yes/no");
+        Scanner userInput = new Scanner(System.in);
+        String Answer = userInput.nextLine();
+        userInput.close();
+
+        if (Answer.equalsIgnoreCase("yes")) {
+            return 0;
+        }
+        else { return 1; }
+    }
+
     public static void DisplayHelp() {
         System.out.println("Boris' Toolkit for Mac Java Special Edition");
         System.out.println("Usage:");
-        System.out.println("-l Delete Launchpad Apps");
-        System.out.println("-r Reset Launchpad");
-        System.out.println("-d Enable/Disable Hide Desktop Icons");
+        System.out.println("-l --launchpad  Delete Launchpad Apps");
+        System.out.println("-r --reset      Reset Launchpad");
+        System.out.println("-d --desktop    Enable/Disable Hide Desktop Icons");
     }
 
-    // Delete Launchpad Apps Function
-    public static void del_launchpad_apps() throws IOException, InterruptedException {
-        Methods.check();
-        // Ask for app name
-        System.out.println("What is the name of the application?");
-        Scanner AppName = new Scanner(System.in);
-        String appName = AppName.nextLine();
-
-        // Final chance before execution
-        System.out.println("Confirm? yes/no");
-        Scanner userInput = new Scanner(System.in);
-        String Answer = userInput.nextLine();
-        userInput.close();
-
-        if (Objects.equals(Answer, "yes")) {
-            command("sqlite3 $(getconf DARWIN_USER_DIR)com.apple.dock.launchpad/db/db \"DELETE FROM apps WHERE title='" + appName + "'" + '"');
+    public static void del_launchpad_apps(String appName) throws IOException, InterruptedException {
+        MacCheck();
+        int confirm = confirm();
+        if (Objects.equals(confirm, 0)) {
+            command("sqlite3 $(getconf DARWIN_USER_DIR)com.apple.dock.launchpad/db/db \"DELETE FROM apps WHERE title='" + appName + "'" + '\"');
             System.out.println("Completed.");
             sleep(1000);
+            System.exit(0);
         }
-        return;
     }
 
-    // Reset Launchpad Layout
     public static void reset_launchpad() throws IOException, InterruptedException {
-        // Confirm before xecution
-        System.out.println("Confirm? yes/no");
-        Scanner userInput = new Scanner(System.in);
-        String Answer = userInput.nextLine();
-        userInput.close();
-
-        if (Objects.equals(Answer, "yes")) {
+        MacCheck();
+        int confirm = confirm();
+        if (Objects.equals(confirm, 0)) {
             command("defaults write com.apple.dock ResetLaunchPad -bool true");
             command("killall Dock");
             System.out.println("Completed.");
             sleep(1000);
-            return;
+            System.exit(0);
         }
-        return;
     }
 
-    // Disable/Enable Desktop Icons
-    public static void desktop_icons() throws IOException, InterruptedException {
-        // Enable or Disable
-        System.out.println("Enable/Disable Desktop Icons?");
-        Scanner eORd = new Scanner(System.in);
-        String eORdReturn = eORd.nextLine();
-
-        if (Objects.equals(eORdReturn, "Enable")) {
-
-            // Final chance before execution
-            System.out.println("Confirm? yes/no");
-            Scanner userInput = new Scanner(System.in);
-            String Answer = userInput.nextLine();
-            userInput.close();
-
-            if (Objects.equals(Answer, "yes")) {
+    public static void desktop_icons(String selection) throws IOException, InterruptedException {
+        MacCheck();
+        int confirm = confirm();
+        if (selection.equals("enable")) {
+            if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop true");
                 command("killall Finder");
                 command("Killall Dock");
                 System.out.println("Completed.");
                 sleep(1000);
+                System.exit(0);
             }
-            return;
         }
-        else if (Objects.equals(eORdReturn, "Disable")) {
-
-            // Final chance before execution
-            System.out.println("Confirm? yes/no");
-            Scanner userInput = new Scanner(System.in);
-            String Answer = userInput.nextLine();
-            userInput.close();
-
-            if (Objects.equals(Answer, "yes")) {
+        else if (selection.equals("disable")) {
+            if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop false");
                 command("killall Finder");
                 command("Killall Dock");
                 System.out.println("Completed.");
                 sleep(1000);
+                System.exit(0);
             }
             return;
         }
-        return;
     }
 }
