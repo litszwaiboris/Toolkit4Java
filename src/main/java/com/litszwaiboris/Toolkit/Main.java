@@ -37,7 +37,7 @@ public class Main {
                 }
                 else {
                     throw new IllegalArgumentException("Please use arguments --enable/--disable to modify desktop icons settings.");
-                    }
+                }
             }
         }
         else {
