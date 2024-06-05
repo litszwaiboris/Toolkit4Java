@@ -9,7 +9,7 @@ public class Main {
         List<String> Arguments = Arrays.asList(args);
 
         if (args.length > 0) {
-            if (Arguments.contains("-h") || Arguments.contains("--help")) {
+            if (Arguments.get(0).equals("-h") || Arguments.get(0).equals("--help")) {
                 Methods.DisplayHelp();
                 System.exit(0);
             }
