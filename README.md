@@ -4,6 +4,8 @@
 
 #### My first project on Java, and it is simple as that c:
 
+#### Don't expect this is a professional software, as it is a personal testing project for me to learn more about Java, and its functionality will change greatly over time
+
 #### New version, same functions, but instead utilize arguments instead of being TUI-based
 
 #### Contains 3 functions
