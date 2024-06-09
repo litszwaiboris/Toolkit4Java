@@ -1,4 +1,4 @@
-![GitHub Release](https://img.shields.io/github/v/release/litszwaiboris/Toolkit4Java?include_prereleases&sort=semver&display_name=tag&style=for-the-badge&labelColor=black&link=https://github.com/litszwaiboris/Toolkit4Java/actions) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/litszwaiboris/Toolkit4Java/maven.yml?branch=experimental-arguments&event=push&style=for-the-badge&logo=github&labelColor=black)
+<img src="https://img.shields.io/github/v/release/litszwaiboris/Toolkit4Java?include_prereleases&sort=semver&display_name=tag&style=for-the-badge&labelColor=black&link=https://github.com/litszwaiboris/Toolkit4Java/actions)">   <img src="https://img.shields.io/github/actions/workflow/status/litszwaiboris/Toolkit4Java/maven.yml?branch=experimental-arguments&event=push&style=for-the-badge&logo=github&labelColor=black">
 
 # Boris' Toolkit for Java
 
