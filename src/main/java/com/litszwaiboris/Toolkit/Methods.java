@@ -2,36 +2,19 @@ package com.litszwaiboris.Toolkit;
 
 import java.io.*;
 import java.util.*;
+import javax.swing.*;
 
-import static com.litszwaiboris.Toolkit.ANSI.*;
-import static java.lang.Thread.*;
 import org.apache.commons.lang3.*;
 
 public class Methods {
 
+    static String[] choices = { "Yes", "No" };
+
     public static void MacCheck() throws NullPointerException, InterruptedException {
-        String os = SystemUtils.OS_NAME;
-        System.out.println("Checking Environment:");
-        System.out.println("OS: " + os);
-        System.out.print("OS Supported: ");
-        if (SystemUtils.IS_OS_MAC) {
-            System.out.println(ANSI_BOLD.value + ANSI_GREEN.value + "Yes" + ANSI_RESET.value);
+        if (!SystemUtils.IS_OS_MAC) {
+            JOptionPane.showMessageDialog(null, "This OS does not support Mac OS X Toolkit. Aborting...");
+            System.exit(0);
         }
-        else {
-            System.out.println(ANSI_BOLD.value + ANSI_RED.value + "No" + ANSI_RESET.value);
-            System.out.println();
-            System.out.println("This operating system does not support Boris' Toolkit, press Enter to exit");
-
-            // Detect enter
-            Scanner detect = new Scanner(System.in);
-            String keyPressed = detect.nextLine();
-            detect.close();
-
-            if (Objects.equals(keyPressed, "")) {
-                return;
-            }
-        }
-        sleep(1000);
     }
 
     private static void command(String arg) throws IOException {
@@ -44,69 +27,49 @@ public class Methods {
         }
     }
 
-    private static int confirm() {
-        System.out.println("Confirm? yes/no");
-        Scanner userInput = new Scanner(System.in);
-        String Answer = userInput.nextLine();
-        userInput.close();
-
-        if (Answer.equalsIgnoreCase("yes")) {
-            return 0;
-        }
-        else { return 1; }
-    }
-
-    public static void DisplayHelp() {
-        System.out.println("Boris' Toolkit for Mac Java Special Edition");
-        System.out.println("Usage:");
-        System.out.println("-l --launchpad  Delete Launchpad Apps");
-        System.out.println("-r --reset      Reset Launchpad");
-        System.out.println("-d --desktop    Enable/Disable Hide Desktop Icons");
-    }
-
-    public static void del_launchpad_apps(String appName) throws IOException, InterruptedException {
-        MacCheck();
-        int confirm = confirm();
+    public static void del_launchpad_apps(String appName) throws IOException {
+        int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
         if (Objects.equals(confirm, 0)) {
             command("sqlite3 $(getconf DARWIN_USER_DIR)com.apple.dock.launchpad/db/db \"DELETE FROM apps WHERE title='" + appName + "'" + '\"');
+            command("killall Dock");
             System.out.println("Completed.");
-            sleep(1000);
             System.exit(0);
+        }
+        else {
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Aborted.");
         }
     }
 
-    public static void reset_launchpad() throws IOException, InterruptedException {
-        MacCheck();
-        int confirm = confirm();
+    public static void reset_launchpad() throws IOException {
+        int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
         if (Objects.equals(confirm, 0)) {
             command("defaults write com.apple.dock ResetLaunchPad -bool true");
             command("killall Dock");
-            System.out.println("Completed.");
-            sleep(1000);
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Completed.");
             System.exit(0);
         }
     }
 
-    public static void desktop_icons(String selection) throws IOException, InterruptedException {
-        MacCheck();
-        int confirm = confirm();
-        if (selection.equals("enable")) {
+    public static void desktop_icons() throws IOException, InterruptedException {
+        String[] choices = {"Enable", "Disable"};
+        int eORd = JOptionPane.showOptionDialog(null, "Enable/Disable Desktop Icons?", "Desktop Icons", JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+        if (Objects.equals(eORd,0)) {
+            int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
             if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop true");
                 command("killall Finder");
                 command("Killall Dock");
-                System.out.println("Completed.");
-                sleep(1000);
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Completed.");
                 System.exit(0);
             }
         }
-        else if (selection.equals("disable")) {
+        else if (Objects.equals(eORd,1)) {
+            int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, 0 , JOptionPane.QUESTION_MESSAGE, null, choices, null);
             if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop false");
                 command("killall Finder");
                 command("Killall Dock");
-                System.out.println("Completed.");
-                sleep(1000);
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Completed.");
                 System.exit(0);
             }
         }
