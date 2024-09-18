@@ -10,7 +10,7 @@ public class Methods {
 
     static String[] choices = { "Yes", "No" };
 
-    public static void MacCheck() throws NullPointerException, InterruptedException {
+    public static void MacCheck() throws NullPointerException {
         if (!SystemUtils.IS_OS_MAC) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "This OS does not support Mac OS X Toolkit. Aborting...");
             System.exit(0);
@@ -70,7 +70,7 @@ public class Methods {
             }
         }
         else if (Objects.equals(eORd,1)) {
-            int confirm = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Confirm to proceed?", null, 0 , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+            int confirm = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, choices, null);
             if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop false");
                 command("killall Finder");
