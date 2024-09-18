@@ -12,7 +12,7 @@ public class Methods {
 
     public static void MacCheck() throws NullPointerException, InterruptedException {
         if (!SystemUtils.IS_OS_MAC) {
-            JOptionPane.showMessageDialog(null, "This OS does not support Mac OS X Toolkit. Aborting...");
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "This OS does not support Mac OS X Toolkit. Aborting...");
             System.exit(0);
         }
     }
@@ -28,7 +28,7 @@ public class Methods {
     }
 
     public static void del_launchpad_apps(String appName) throws IOException {
-        int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+        int confirm = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
         if (Objects.equals(confirm, 0)) {
             command("sqlite3 $(getconf DARWIN_USER_DIR)com.apple.dock.launchpad/db/db \"DELETE FROM apps WHERE title='" + appName + "'" + '\"');
             command("killall Dock");
@@ -41,20 +41,23 @@ public class Methods {
     }
 
     public static void reset_launchpad() throws IOException {
-        int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+        int confirm = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
         if (Objects.equals(confirm, 0)) {
             command("defaults write com.apple.dock ResetLaunchPad -bool true");
             command("killall Dock");
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Completed.");
             System.exit(0);
         }
+        else {
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Aborted.");
+        }
     }
 
     public static void desktop_icons() throws IOException, InterruptedException {
-        String[] choices = {"Enable", "Disable"};
-        int eORd = JOptionPane.showOptionDialog(null, "Enable/Disable Desktop Icons?", "Desktop Icons", JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+        String[] choice = {"Enable", "Disable"};
+        int eORd = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Enable/Disable Desktop Icons?", "Desktop Icons", JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choice, null);
         if (Objects.equals(eORd,0)) {
-            int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+            int confirm = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Confirm to proceed?", null, JOptionPane.DEFAULT_OPTION , JOptionPane.QUESTION_MESSAGE, null, choices, null);
             if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop true");
                 command("killall Finder");
@@ -62,15 +65,21 @@ public class Methods {
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Completed.");
                 System.exit(0);
             }
+            else {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Aborted.");
+            }
         }
         else if (Objects.equals(eORd,1)) {
-            int confirm = JOptionPane.showOptionDialog(null, "Confirm to proceed?", null, 0 , JOptionPane.QUESTION_MESSAGE, null, choices, null);
+            int confirm = JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Confirm to proceed?", null, 0 , JOptionPane.QUESTION_MESSAGE, null, choices, null);
             if (Objects.equals(confirm, 0)) {
                 command("defaults write com.apple.Finder CreateDesktop false");
                 command("killall Finder");
                 command("Killall Dock");
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Completed.");
                 System.exit(0);
+            }
+            else {
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Aborted.");
             }
         }
     }
